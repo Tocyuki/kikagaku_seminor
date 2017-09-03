@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Flask</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+  </head>
+  <body>
+    <!-- {% for query in queries %}
+      <p>
+        label: {{ query.label }}
+      </p>
+      <p>
+        value: {{ query.value }}
+      </p>
+    {% endfor %} -->
+    <canvas id="bar" width="1200" height="600"></canvas>
+
+    <script>
+      var chartData = {
+        labels : [
+          {% for query in queries %}
+            {{query.label}},
+          {% endfor %}
+        ],
+        datasets : [
+          {
+            label: 'Dataset 1',
+            backgroundColor: '#2ecc71',
+            borderColor: 'black',
+            fill: false,
+            data : [
+              {% for query in queries %}
+                {{ query.value }},
+              {% endfor %}
+            ]
+          },
+        ]
+      };
+
+
+      var chart_elem = document.getElementById("bar").getContext("2d");
+      var bar = new Chart(chart_elem, {
+        type: 'line',
+        data: chartData,
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
